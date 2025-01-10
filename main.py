@@ -14,31 +14,39 @@
 # ...
 #
 # 4 questions
-
-def poser_question(question, r1, r2, r3, r4, choix_bonne_reponse):
-    #global score
+SCORE = 10
+def poser_question(question):
     score = 0
-    print("score:", score)
-    print("QUESTION")
-    print("  " + question)
-    print("  (a)", r1)
-    print("  (b)", r2)
-    print("  (c)", r3)
-    print("  (d)", r4)
+    titre= question[0]
+    choix = question[1]
+    bonne_reponse= question [2]
+    nb_choix = len(choix)
+    print("QUESTION ")
+    print(titre)
+        
+    for i in range(0, nb_choix): 
+        print(  f" {i+1}- { choix[i]}")
     print()
-    reponse = input("Votre réponse : ")
-    if reponse == choix_bonne_reponse:
+
+    reponse_str = input(f"Votre réponse (entre 1 et {nb_choix}) : ")
+    reponse_int = int(reponse_str)
+    if choix[reponse_int-1].lower() == bonne_reponse.lower():
         print("Bonne réponse")
-        #score += 1
+        score += 1
     else:
         print("Mauvaise réponse")
         
     print()
 
 
-score = 10
+question1 =  ("Quelle est la capitale de la France ?"),("Marseille", "Nice", "Paris", "Nantes"),("Paris")
 
-poser_question("Quelle est la capitale de la France ?", "Marseille", "Nice", "Paris", "Nantes", "c")
-poser_question("Quelle est la capitale de l'Italie ?", "Rome", "Venise", "Pise", "Florence", "a")
+question2 =  ("Quelle est la capitale de l'Italie ?"),( "Rome", "Venise", "Pise", "Florence"),("Rome")
 
-print("Score final :", score)
+poser_question(question1)
+poser_question(question2)
+
+# poser_question("Quelle est la capitale de la France ?", "Marseille", "Nice", "Paris", "Nantes", "c")
+# poser_question("Quelle est la capitale de l'Italie ?", "Rome", "Venise", "Pise", "Florence", "a")
+
+print("Score final :", SCORE)

@@ -6,8 +6,9 @@ def poser_question(question):
     choix = question[1]
     bonne_reponse= question [2]
     nb_choix = len(choix)
-    print("QUESTION ")
+    print("QUESTION")
     print( "  " +   titre)
+    resultat_rep_correct= False
         
     for i in range(0, nb_choix): 
         print(  f" {i+1}- { choix[i]}")
@@ -15,10 +16,11 @@ def poser_question(question):
     if choix[reponse_int-1].lower() == bonne_reponse.lower():
         print("Bonne réponse")
         score += 1
-        return score
+        resultat_rep_correct= True
     else:
         print("Mauvaise réponse")
     print()
+    return resultat_rep_correct
 
 def demander_reponse_num (min , max):
     reponse_str = input(f"Votre réponse ( entre {min} et {max} ) : ")
@@ -33,8 +35,11 @@ def demander_reponse_num (min , max):
     return demander_reponse_num(min , max) 
 
 def lance_questionaire(questionnaire):  
+    score = 0
     for question in questionnaire:
-        poser_question(question)
+        if poser_question(question) :
+            score += 1
+    print(f"Score final = {score}" )  
 
 
 # question1 =  ("Quelle est la capitale de la France ?"),("Marseille", "Nice", "Paris", "Nantes"),("Paris")
@@ -44,10 +49,13 @@ def lance_questionaire(questionnaire):
 # question3 =  ("Quelle est la capitale de la Belgique ?"),( "Anvers", "Bruxelles", "Bruges", "Liége"),("Bruxelles")
 
 questionnaire = (
-                    ("Quelle est la capitale de la France ?",("Marseille", "Nice", "Paris", "Nantes"),"Paris") ,
-                    ("Quelle est la capitale de l'Italie ?",( "Rome", "Venise", "Pise", "Florence"),"Rome") ,
-                   ("Quelle est la capitale de la Belgique ?",( "Anvers", "Bruxelles", "Bruges", "Liége"),"Bruxelles")
+    ("Quelle est la capitale de la France ?",("Marseille", "Nice", "Paris", "Nantes"),"Paris") ,
+
+    ("Quelle est la capitale de l'Italie ?",( "Rome", "Venise", "Pise", "Florence"),"Rome") ,
+
+    ("Quelle est la capitale de la Belgique ?",( "Anvers", "Bruxelles", "Bruges", "Liége"),"Bruxelles")
 )
 lance_questionaire(questionnaire)
+
 
 

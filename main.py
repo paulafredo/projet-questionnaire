@@ -1,52 +1,53 @@
 # LES FONCTIONS : PROJET QUESTIONNAIRE
-#
-# Question : Quelle est la capitale de la France ?
-# (a) Marseille
-# (b) Nice
-# (c) Paris
-# (d) Nantes
-#
-# Votre réponse :
-# Bonne réponse / Mauvaise réponse
 
-# ...
-# Question : Quelle est la capitale de l'Italie ?
-# ...
-#
-# 4 questions
-SCORE = 10
 def poser_question(question):
-    score = 0
+    score = 1
     titre= question[0]
     choix = question[1]
     bonne_reponse= question [2]
     nb_choix = len(choix)
     print("QUESTION ")
-    print(titre)
+    print( "  " +   titre)
         
     for i in range(0, nb_choix): 
         print(  f" {i+1}- { choix[i]}")
-    print()
-
-    reponse_str = input(f"Votre réponse (entre 1 et {nb_choix}) : ")
-    reponse_int = int(reponse_str)
+    reponse_int = demander_reponse_num(1 , nb_choix)
     if choix[reponse_int-1].lower() == bonne_reponse.lower():
         print("Bonne réponse")
         score += 1
+        return score
     else:
         print("Mauvaise réponse")
-        
     print()
 
+def demander_reponse_num (min , max):
+    reponse_str = input(f"Votre réponse ( entre {min} et {max} ) : ")
+    try :
+        reponse_int = int(reponse_str)
+        if    min<=reponse_int <= max : 
+            return reponse_int
+        print(f"ERREUR : Veuille choisir un nombre entre {min} et {max} ")
+               
+    except :
+            print("ERREUR : Veuille rentrer uniquement de chiffre  ")
+    return demander_reponse_num(min , max) 
 
-question1 =  ("Quelle est la capitale de la France ?"),("Marseille", "Nice", "Paris", "Nantes"),("Paris")
+def lance_questionaire(questionnaire):  
+    for question in questionnaire:
+        poser_question(question)
 
-question2 =  ("Quelle est la capitale de l'Italie ?"),( "Rome", "Venise", "Pise", "Florence"),("Rome")
 
-poser_question(question1)
-poser_question(question2)
+# question1 =  ("Quelle est la capitale de la France ?"),("Marseille", "Nice", "Paris", "Nantes"),("Paris")
 
-# poser_question("Quelle est la capitale de la France ?", "Marseille", "Nice", "Paris", "Nantes", "c")
-# poser_question("Quelle est la capitale de l'Italie ?", "Rome", "Venise", "Pise", "Florence", "a")
+# question2 =  ("Quelle est la capitale de l'Italie ?"),( "Rome", "Venise", "Pise", "Florence"),("Rome")
 
-print("Score final :", SCORE)
+# question3 =  ("Quelle est la capitale de la Belgique ?"),( "Anvers", "Bruxelles", "Bruges", "Liége"),("Bruxelles")
+
+questionnaire = (
+                    ("Quelle est la capitale de la France ?",("Marseille", "Nice", "Paris", "Nantes"),"Paris") ,
+                    ("Quelle est la capitale de l'Italie ?",( "Rome", "Venise", "Pise", "Florence"),"Rome") ,
+                   ("Quelle est la capitale de la Belgique ?",( "Anvers", "Bruxelles", "Bruges", "Liége"),"Bruxelles")
+)
+lance_questionaire(questionnaire)
+
+

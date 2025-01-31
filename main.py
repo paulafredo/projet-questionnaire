@@ -1,61 +1,65 @@
-# LES FONCTIONS : PROJET QUESTIONNAIRE
+# LES FONCTIONS : PROJET QUESTIONNAIRE POO 
 
-def poser_question(question):
-    score = 1
-    titre= question[0]
-    choix = question[1]
-    bonne_reponse= question [2]
-    nb_choix = len(choix)
-    print("QUESTION")
-    print( "  " +   titre)
-    resultat_rep_correct= False
+# question :  
+#  --titre
+#  --choix 
+#  --bonneRep 
+    # poser()--> bool
+    
+#  questionnaire :
+#     questions --(Question)
+
+ 
+class Question :
+    def __init__(self , titre : str , choix , bonne_reponse: str):
+        self.titre = titre
+        self.choix =choix
+        self.bonne_reponse = bonne_reponse
+      
+    def poser(self):
+        print("QUESTION")
+        print("  " + self.titre)
+        for i in range(len(self.choix)):
+            print("  ", i+1, "-",self.choix[i])
+        print()
+        resultat_response_correcte = False
+        reponse_int = Question.demander_reponse_numerique_utulisateur(1,len(self.choix))
+        if self.choix[reponse_int-1].lower() == self.bonne_reponse.lower():
+            print("Bonne réponse")
+            resultat_response_correcte = True
+        else:
+            print("Mauvaise réponse")
+        print()
+        return resultat_response_correcte
+
         
-    for i in range(0, nb_choix): 
-        print(  f" {i+1}- { choix[i]}")
-    reponse_int = demander_reponse_num(1 , nb_choix)
-    if choix[reponse_int-1].lower() == bonne_reponse.lower():
-        print("Bonne réponse")
-        score += 1
-        resultat_rep_correct= True
-    else:
-        print("Mauvaise réponse")
-    print()
-    return resultat_rep_correct
+    def demander_reponse_numerique_utulisateur(min, max):
+        reponse_str = input("Votre réponse (entre " + str(min) + " et " + str(max) + ") :")
+        try:
+            reponse_int = int(reponse_str)
+            if min <= reponse_int <= max:
+                    return reponse_int
 
-def demander_reponse_num (min , max):
-    reponse_str = input(f"Votre réponse ( entre {min} et {max} ) : ")
-    try :
-        reponse_int = int(reponse_str)
-        if    min<=reponse_int <= max : 
-            return reponse_int
-        print(f"ERREUR : Veuille choisir un nombre entre {min} et {max} ")
-               
-    except :
-            print("ERREUR : Veuille rentrer uniquement de chiffre  ")
-    return demander_reponse_num(min , max) 
-
-def lance_questionaire(questionnaire):  
-    score = 0
-    for question in questionnaire:
-        if poser_question(question) :
-            score += 1
-    print(f"Score final = {score}" )  
-
-
-# question1 =  ("Quelle est la capitale de la France ?"),("Marseille", "Nice", "Paris", "Nantes"),("Paris")
-
-# question2 =  ("Quelle est la capitale de l'Italie ?"),( "Rome", "Venise", "Pise", "Florence"),("Rome")
-
-# question3 =  ("Quelle est la capitale de la Belgique ?"),( "Anvers", "Bruxelles", "Bruges", "Liége"),("Bruxelles")
-
-questionnaire = (
-    ("Quelle est la capitale de la France ?",("Marseille", "Nice", "Paris", "Nantes"),"Paris") ,
-
-    ("Quelle est la capitale de l'Italie ?",( "Rome", "Venise", "Pise", "Florence"),"Rome") ,
-
-    ("Quelle est la capitale de la Belgique ?",( "Anvers", "Bruxelles", "Bruges", "Liége"),"Bruxelles")
-)
-lance_questionaire(questionnaire)
-
-
-
+            print("ERREUR : Vous devez rentrer un nombre entre", min, "et", max)
+        except:
+                print("ERREUR : Veuillez rentrer uniquement des chiffres")
+        return 
+class questionnaire(Question): 
+    def __init__(self, questions):
+         self.questions = questions
+         
+    def lance(self):
+        score = 0
+        for question in self.questions:
+            if question.poser():
+                score += 1
+        print("Score final :", score, "sur", len(self.questions))
+        return score 
+         
+questions  = [
+        Question("Quelle est la capitale de la France ?", ("Marseille", "Nice", "Paris", "Nantes", "Lille"), "Paris"), 
+        Question("Quelle est la capitale de l'Italie ?", ("Rome", "Venise", "Pise", "Florence"), "Rome"),
+        Question("Quelle est la capitale de la Belgique ?", ("Anvers", "Bruxelles", "Bruges", "Liège"), "Bruxelles")
+]                                  
+questionnaires = questionnaire(questions)
+questionnaires.lance()
